@@ -45,10 +45,10 @@
 
                         <div>
 
-                            <h1>Liste des categories </h1>
+                            <h1>Liste des produits </h1>
                             <hr>
                             <a data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                class="btn btn-primary mt-3">Ajouter categorie</a>
+                                class="btn btn-primary mt-3">Ajouter produit</a>
 
 
 
@@ -58,23 +58,31 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Nom categorie</th>
+                                            <th scope="col">Nom produit</th>
                                             <th scope="col">Description</th>
+                                            <th scope="col">prix</th>
+                                            <th scope="col">quantité</th>
+                                            <th scope="col">image</th>
+                                          
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        @foreach ($categories as $item => $c)
+                                        @foreach ($products as $item => $p)
                                             <tr>
                                                 <th scope="row">{{ $item + 1 }}</th>
-                                                <td>{{ $c->name }}</td>
-                                                <td>{{ $c->description }}</td>
+                                                <td>{{ $p->name }}</td>
+                                                <td>{{ $p->description }}</td>
+                                                <td>{{ $p->price }}</td>
+                                                <td>{{ $p->qte }}</td>
+                                                <td>{{ $p->photo }}</td>
+                                                
 
                                                 <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#editCategory{{$c->id}}" class="btn btn-success">Modifier</a>
-                                                    <a onclick="return confirm('voulez vous vraiment supprimer cette categorie')"
-                                                        href="/admin/categorie/{{ $c->id }}/delete"
+                                                    <a data-bs-toggle="modal" data-bs-target="#editProduct{{$c->id}}" class="btn btn-success">Modifier</a>
+                                                    <a onclick="return confirm('voulez vous vraiment supprimer ce produit')"
+                                                        href="/admin/product/{{ $c->id }}/delete"
                                                         class="btn btn-danger">Supprimer</a>
                                                 </td>
 
@@ -121,7 +129,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ajouter categorie</h5><button class="btn p-1"
+                    <h5 class="modal-title" id="exampleModalLabel">ajouter produit</h5><button class="btn p-1"
                         type="button" data-bs-dismiss="modal" aria-label="Close"><svg
                             class="svg-inline--fa fa-times fa-w-11 fs--1" aria-hidden="true" focusable="false"
                             data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +139,7 @@
                             </path>
                         </svg><!-- <span class="fas fa-times fs--1"></span> Font Awesome fontawesome.com --></button>
                 </div>
-                <form action="/admin/category/store" method="post">
+                <form action="/admin/product/store" method="post">
                     @csrf
                     <div class="modal-body">
 
@@ -139,9 +147,9 @@
 
 
                         <div class="mb-3">
-                            <label class="form-label" for="exampleFormControlInput1">Nom categorie</label>
+                            <label class="form-label" for="exampleFormControlInput1">Nom produit</label>
                             <input name="name" class="form-control" id="exampleFormControlInput1" type="text"
-                                placeholder="nom categorie">
+                                placeholder="nom produit">
                             @error('name')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -153,7 +161,7 @@
 
                         </div>
                         <div class="mb-0">
-                            <label class="form-label" for="exampleTextarea">Description categorie</label>
+                            <label class="form-label" for="exampleTextarea">Description produit</label>
                             <textarea name="description" class="form-control" rows="3"> </textarea>
 
                             @error('description')
@@ -162,6 +170,52 @@
 
                                 </div>
                             @enderror
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleFormControlInput1">prix produit</label>
+                            <input name="price" class="form-control" id="exampleFormControlInput1" type="number"
+                                placeholder="prix produit">
+                            @error('price')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleFormControlInput1">quantité produit</label>
+                            <input name="qte" class="form-control" id="exampleFormControlInput1" type="number"
+                                placeholder="quantité produit">
+                            @error('qte')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleFormControlInput1">image</label>
+                            <input name="photo" class="form-control" id="exampleFormControlInput1" type="file"
+                                placeholder="photo">
+                            @error('photo')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
                         </div>
 
 
@@ -180,14 +234,14 @@
         </div>
     </div>
 
-    @foreach($categories as  $index =>$c)
+    @foreach($products as  $index =>$p)
     <!--Modal Modifier-->
-    <div class="modal fade" id="editCategory{{$c->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    <div class="modal fade" id="editProduct{{$p->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
         style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">modifier categorie <span class="text-primary">  {{$c->name }} </span>  </h5><button class="btn p-1"
+                    <h5 class="modal-title" id="exampleModalLabel">modifier produit <span class="text-primary">  {{$p->name }} </span>  </h5><button class="btn p-1"
                         type="button" data-bs-dismiss="modal" aria-label="Close"><svg
                             class="svg-inline--fa fa-times fa-w-11 fs--1" aria-hidden="true" focusable="false"
                             data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +251,7 @@
                             </path>
                         </svg><!-- <span class="fas fa-times fs--1"></span> Font Awesome fontawesome.com --></button>
                 </div>
-                <form action="/admin/category/update" method="post">
+                <form action="/admin/product/update" method="post">
                     @csrf
                     <div class="modal-body">
 

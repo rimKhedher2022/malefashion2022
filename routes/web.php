@@ -21,10 +21,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin/dashboard','AdminController@dashboard');
+Route::get('/admin/dashboard','AdminController@dashboard');  // ->middleware('auth','admin')
 Route::get('/client/dashboard','ClientController@dashboard');
-Route::get('/admin/categories','CategoryController@index');
-Route::post('/admin/category/store','CategoryController@store');
-Route::get('/admin/categorie/{id}/delete','CategoryController@destroy');
+Route::get('/admin/categories','CategoryController@index')->middleware('auth','admin');
+Route::post('/admin/category/store','CategoryController@store')->middleware('auth','admin');
+Route::get('/admin/categorie/{id}/delete','CategoryController@destroy')->middleware('auth','admin');
+Route::post('/admin/category/update','CategoryController@update')->middleware('auth','admin');
+/*Route product */
+Route::get('/admin/products','ProductController@index')->middleware('auth','admin');
+Route::post('/admin/product/store','ProductController@store')->middleware('auth','admin');
+Route::get('/admin/product/{id}/delete','ProductController@destroy')->middleware('auth','admin');
+Route::post('/admin/product/update','ProductController@update')->middleware('auth','admin');
 
 

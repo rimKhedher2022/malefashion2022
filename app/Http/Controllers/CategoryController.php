@@ -26,12 +26,12 @@ class CategoryController extends Controller
         ]);
 
 
-        $categoty = new Category();
+        $category = new Category();
 
-        $categoty->name=$request->name;
-        $categoty->description=$request->description;
+        $category->name=$request->name;
+        $category->description=$request->description;
 
-        if($categoty->save())
+        if($category->save())
         {return redirect()->back();}
 
         else{
@@ -44,8 +44,8 @@ class CategoryController extends Controller
 
     public function destroy ($id){
 
-        $categotie = Category::find($id);
-        if($categotie->delete())
+        $categorie = Category::find($id);
+        if($categorie->delete())
 
         {
             return redirect()->back();
@@ -56,5 +56,31 @@ class CategoryController extends Controller
         {
             echo "error";
         }
+    }
+
+
+
+    public function update(Request $request)
+    {
+
+        $request->validate([
+            'name'=>'required',
+            'description'=>'required'
+   
+           ]);
+
+           $id=$request->id_category;
+           $categorie = Category::find($id);
+           $categorie->name=$request->name;
+           $categorie->description=$request->description;
+
+           if($categorie->update())
+           {return redirect()->back();}
+   
+           else{
+               echo "error";
+           }
+
+
     }
 }
