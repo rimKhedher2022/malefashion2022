@@ -23,5 +23,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/dashboard','AdminController@dashboard');
 Route::get('/client/dashboard','ClientController@dashboard');
+Route::get('/admin/categories','CategoryController@index');
+Route::post('/admin/category/store','CategoryController@store');
+Route::get('/admin/categorie/{id}/delete','CategoryController@destroy');
 
 
