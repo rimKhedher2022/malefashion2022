@@ -76,13 +76,17 @@
                                                 <td>{{ $p->description }}</td>
                                                 <td>{{ $p->price }}</td>
                                                 <td>{{ $p->qte }}</td>
-                                                <td>{{ $p->photo }}</td>
+
+                                               
+                                                <td> 
+                                                    <img src="{{ asset('uploads') }}/{{ $p->photo }}" width="150" alt="">
+                                                </td>
                                                 
 
                                                 <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#editProduct{{$c->id}}" class="btn btn-success">Modifier</a>
+                                                    <a data-bs-toggle="modal" data-bs-target="#editProduct{{$p->id}}" class="btn btn-success">Modifier</a>
                                                     <a onclick="return confirm('voulez vous vraiment supprimer ce produit')"
-                                                        href="/admin/product/{{ $c->id }}/delete"
+                                                        href="/admin/product/{{ $p->id }}/delete"
                                                         class="btn btn-danger">Supprimer</a>
                                                 </td>
 
@@ -139,12 +143,31 @@
                             </path>
                         </svg><!-- <span class="fas fa-times fs--1"></span> Font Awesome fontawesome.com --></button>
                 </div>
-                <form action="/admin/product/store" method="post">
+                <form action="/admin/product/store" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
 
 
 
+
+                        <div class="mb-3">
+                    <label class="form-label" for="exampleFormControlInput1">Categorie produit</label>
+                           
+                          <select name="categorie" class="form-control">
+                                        @foreach($categories as $c)
+                                            <option value="{{$c->id}}">{{$c->name}}</option>
+                                         @endforeach
+                          </select>
+                            @error('name')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
+                        </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="exampleFormControlInput1">Nom produit</label>
@@ -251,17 +274,19 @@
                             </path>
                         </svg><!-- <span class="fas fa-times fs--1"></span> Font Awesome fontawesome.com --></button>
                 </div>
-                <form action="/admin/product/update" method="post">
+                <form action="/admin/product/update" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
+                        <input type="hidden" value="{{$p->id}}" name="idproduct">
 
 
 
+                                <img src="{{ asset('uploads') }}/{{ $p->photo }}" alt="" width="150">
 
                         <div class="mb-3">
-                            <label class="form-label" for="exampleFormControlInput1">Nom categorie</label>
-                            <input name="name" class="form-control" id="exampleFormControlInput1" type="text" value="{{$c->name}}"
-                                placeholder="nom categorie">
+                            <label class="form-label" for="exampleFormControlInput1">Nom produit</label>
+                            <input name="name" class="form-control" id="exampleFormControlInput1" type="text" value="{{$p->name}}"
+                                placeholder="nom produit">
                             @error('name')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -273,8 +298,8 @@
 
                         </div>
                         <div class="mb-0">
-                            <label class="form-label" for="exampleTextarea">Description categorie</label>
-                            <textarea name="description" class="form-control" rows="3">{{$c->description}} </textarea>
+                            <label class="form-label" for="exampleTextarea">Description produit</label>
+                            <textarea name="description" class="form-control" rows="3">{{$p->description}} </textarea>
 
                             @error('description')
                                 <div class="alert alert-danger">
@@ -284,7 +309,53 @@
                             @enderror
                         </div>
 
-                        <input type="hidden" value="{{$c->id}}" name="id_category">
+
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleFormControlInput1">prix produit</label>
+                            <input name="price" class="form-control" id="exampleFormControlInput1" type="number" value="{{$p->price}}"
+                                placeholder="prix produit">
+                            @error('price')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleFormControlInput1">quantité produit</label>
+                            <input name="qte" class="form-control" id="exampleFormControlInput1" type="number" value="{{$p->qte}}"
+                                placeholder="quantité produit">
+                            @error('qte')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleFormControlInput1">image</label>
+                            <input name="photo" class="form-control" id="exampleFormControlInput1" type="file"
+                                placeholder="photo">
+                            @error('photo')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+
+                                </div>
+                            @enderror
+
+
+
+                        </div>
+
+                        
 
 
 
@@ -293,7 +364,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit">Okay</button>
+                        <button class="btn btn-primary" type="submit">Modifier</button>
                         <button class="btn btn-outline-primary" type="button"
                             data-bs-dismiss="modal">Cancel</button>
                     </div>

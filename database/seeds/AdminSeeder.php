@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         
-      /*  DB::table('users')->insert(
+       DB::table('users')->insert(
         [ 'name' => 'Admin',
             'email' => 'admin@admin.com',
             'role' => 'admin',
@@ -26,6 +26,6 @@ class AdminSeeder extends Seeder
   ]
          
 
-        );*/
+        );
     }
 }

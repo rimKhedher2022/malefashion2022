@@ -9,7 +9,7 @@
                                 class="nav-link-text">categories</span></div>
                     </a>
                 </li>
-                <li class="nav-item"><a class="nav-link active" href="index.html">
+                <li class="nav-item"><a class="nav-link active" href="/admin/products">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                     data-feather="cast"></span></span><span
                                 class="nav-link-text">produits</span></div>
