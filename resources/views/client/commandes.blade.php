@@ -41,7 +41,25 @@
 
 
             </div>
-            hello client
+           Commandes
+           <table>
+            <thead>
+              <tr>
+
+                 <th>Commande</th>
+                 <th>Etat</th>
+                 <th>date</th>
+                 
+              </tr>
+            </thead>
+            
+               <tr>
+
+               </tr>
+            <tbody>
+            </tbody>
+
+           </table>
           </div>
             </div>
           </div>

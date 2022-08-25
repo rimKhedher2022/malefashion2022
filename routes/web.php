@@ -15,13 +15,32 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/','GuestController@home');
+Route::get('/product/details/{id}','GuestController@productDetails');
+Route::get('/products/{category}/list','GuestController@shop');
+
+Route::post('/products/search','GuestController@search');
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/dashboard','AdminController@dashboard');  // ->middleware('auth','admin')
+Route::get('/admin/profile','AdminController@profile')->middleware('auth','admin'); // pour afficher la page profile
+
+Route::post('/admin/profile/update','AdminController@updateProfile')->middleware('auth','admin');//pour la mise a jour
+
 Route::get('/client/dashboard','ClientController@dashboard');
+Route::get('/client/commandes','ClientController@mescommandes');
+Route::get('/client/profile','ClientController@profile');
+Route::post('/client/profile/update','ClientController@updateProfile')->middleware('auth');
+Route::post('/client/review/store','ClientController@addReview')->middleware('auth');
+
+Route::post('/client/order/store','CommandeController@store')->middleware('auth');
+Route::get('/client/cart','ClientController@cart')->middleware('auth');
+Route::get('/client/lc/{idlc}/destroy','CommandeController@ligneCommandeDestroy')->middleware('auth');
+Route::post('/client/checkout','ClientController@checkout')->middleware('auth');
+
+
 Route::get('/admin/categories','CategoryController@index')->middleware('auth','admin');
 Route::post('/admin/category/store','CategoryController@store')->middleware('auth','admin');
 Route::get('/admin/categorie/{id}/delete','CategoryController@destroy')->middleware('auth','admin');

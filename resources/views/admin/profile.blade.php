@@ -30,18 +30,44 @@
       <div class="container-fluid px-0">
        
 
-        @include('inc.client.sidebar')
-        @include('inc.client.nav')
+        @include('inc.admin.sidebar')
+        @include('inc.admin.nav')
 
 
         <div class="content">
           <div class="pb-5">
             <div class="row g-5">
             
+            @include('inc.flash-message')
+              <h2>Admin Edit Profile</h2>
+            <hr/>
+                <form action="/admin/profile/update" method="POST">
+                    @csrf
+                <div class="form-group">
+                    <label for="">username</label>
+                    <input type="text" value="{{ auth()-> user()->name}}" class="form-control" name="name">
+                </div>
 
+                <div class="form-group">
+                    <label for="">email</label>
+                    <input type="email" value="{{ auth()-> user()->email}}" class="form-control" name="email">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="">password</label>
+                    <input type="password" class="form-control" name="password" placeholder="nouveau mot de passe...">
+                </div>
+                <div class="form-group">
+                    <button  type="submit" class="btn btn-primary">save</button>
+                </div>
+
+             
+           </form>
 
             </div>
-            hello client
+         
+
+
           </div>
             </div>
           </div>
